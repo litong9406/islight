@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>色盲测试</title>
+		<style type="text/css">
+			body {
+				background: lavender;
+			}
+			
+			#main {
+				width: 300px;
+				height: 400px;
+				border: 1px solid gray;
+				margin: 0 auto;
+				background: floralwhite;
+				border-radius: 10px;
+				margin-top: 100px;
+			}
+			
+			#header {
+				width: 100%;
+				height: 50px;
+				border-bottom: 1px solid goldenrod;
+			}
+			
+			#change {
+				width: 100%;
+				height: 450px;
+				position: relative;
+			}
+			
+			#title {
+				width: 100%;
+				margin-top: 20px;
+			}
+			
+			#reminder {
+				margin-top: 30px;
+				text-indent: 2rem;
+				color: darkorange;
+			}
+			
+			#color {
+				width: 100%;
+				margin-top: 20px;
+			}
+			
+			#remingder1 {
+				text-indent: 2rem;
+				margin-top: 20px;
+				font-size: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="main">
+			<div id="header">
+				<div id="cut_down" style="position: relative;line-height: 50px;">
+					<span style='color:red;' id="daoji">倒计时:</span>
+					<span id="count" style='position: absolute;left: 220px;'>得分:</span>
+
+				</div>
+			</div>
+			<div id="change">
+				<div id="title">
+					<!--蓝-->
+				</div>
+				<div id="reminder">
+					根据上面的字的颜色从下面选择正确的字，选择正确自动开始
+				</div>
+				<div id="color"></div>
+				<div id="remingder1">
+					一旦点击正确，开始计时。
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var daoji = document.getElementById('daoji');
+		daoji.style.lineHeight = '50px';
+		var haha = daoji.innerHTML;
+		var defen = document.getElementById('count');
+		defen.style.color = 'darkturquoise';
+		//		defen.style.marginLeft='0';
+		var hehe = defen.innerHTML;
+		console.log(hehe);
+		//最下面5个字
+		var level = 5;
+		var width = 45;
+		var height = 45;
+		var margin = 6.5;
+		var fontsize = 30;
+		var border = '1px solid gray';
+		var color = document.getElementById('color');
+		var onself = [];
+		for(i = 0; i < level; i++) {
+			var color = document.getElementById('color');
+			var oneself = document.createElement('div');
+			oneself.style.fontSize = fontsize + 'px'
+			oneself.style.width = width + 'px';
+			oneself.style.height = height + 'px';
+			oneself.style.border = border;
+			oneself.style.display = 'inline-block';
+			oneself.style.margin = '0 auto';
+			oneself.style.margin = margin + 'px';
+			oneself.style.textAlign = 'center';
+			oneself.style.lineHeight = height + 'px';
+			oneself.style.verticalAlign = 'top';
+			onself.push(oneself);
+			oneself.onclick = click;
+			color.appendChild(oneself);
+		}
+		var color1 = ['red', 'green', 'yellow', 'purple', 'blue'];
+		var color2 = ['red', 'green', 'yellow', 'purple', 'blue'];
+		var character = ['红', '蓝', '紫', '绿', '黄'];
+		var character1 = ['红', '蓝', '紫', '绿', '黄'];
+
+		var chara = [];
+		//大字
+		var title = document.getElementById('title')
+		var cha = document.createElement('div');
+		cha.style.textAlign = 'center';
+		cha.style.width = '100%';
+		cha.style.height = '100px'
+		cha.style.fontSize = '5rem'
+		title.appendChild(cha);
+
+		var count = 0;
+		var index=0;
+		defen.innerHTML = hehe + count + '分';
+		//点击方法
+		function click() {
+			var cont = this.innerHTML;
+			var aaa = cha.style.color;
+			if(aaa == 'yellow' && cont == '黄') {
+				random();
+				count++;
+				defen.innerHTML = hehe + count + '分';
+			} else if(aaa == 'red' && cont == '红') {
+				random();
+				count++;
+				defen.innerHTML = hehe + count + '分';
+			} else if(aaa == 'green' && cont == '绿') {
+				random();
+				count++;
+				defen.innerHTML = hehe + count + '分';
+			} else if(aaa == 'purple' && cont == '紫') {
+				random();
+				count++;
+				defen.innerHTML = hehe + count + '分';
+			} else if(aaa == 'blue' && cont == '蓝') {
+				random();
+				count++;
+				defen.innerHTML = hehe + count + '分';
+			} else {
+				console.log(aaa);
+			}
+			
+			if(count == 1) {
+				index++
+				if(index==1){
+				aaaaa();
+					
+				}
+			}
+
+			console.log(aaa);
+			console.log(count);
+		}
+
+//		function random() {
+//			paixu();
+//		}
+
+		function random() {
+			character = character.sort(function() {
+				return Math.random() - 0.5
+			});
+			character1 = character1.sort(function() {
+				return Math.random() - 0.5
+			});
+			color1 = color1.sort(function() {
+				return Math.random() - 0.5
+			});
+			color2 = color2.sort(function() {
+				return Math.random() - 0.5
+			});
+
+			console.log(character);
+			console.log(color1);
+			console.log(character1);
+			console.log(color2);
+			for(var i = 0; i < level; i++) {
+				onself[i].innerHTML = character[i];
+				onself[i].style.color = color1[i];
+				onself[i].id = color1[i];
+				cha.name = character[i];
+				cha.innerHTML = character1[i];
+				cha.style.color = color2[i];
+			}
+		}
+		var time = 20;
+		daoji.innerHTML = haha + '20s';
+
+		function aaaaa() {
+			if(time > 0) {
+				setInterval(function() {
+					time--;				
+					daoji.innerHTML = haha + time + 's';
+					console.log(time);
+					if(time == 0) {
+						alert('总分' + count + '分');
+						history.go('0');
+					} else {
+
+					}
+				}, 1000);
+			} else {
+				console.log('1');
+			}
+		}
+		random();
+	</script>
+
+</html>
