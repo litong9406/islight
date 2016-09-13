@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		//公共变量
+		var lightwidth=30;
+		var lightheight=30;
+		var lightcol=19;
+		var lightrow=17;
+		var background1='black';
+		var background2='yellow';
+		var boxshadow1='10px 10px 10px gray';
+		var boxshadow2='10px 10px 10px blue';
+		var margin=2;
+		var level=5;
+		var color='white';
+		var count=0;
+		//
+		var body_=document.getElementsByTagName('body')[0]
+		var wrap=document.createElement('div');
+		wrap.style.margin='auto';
+		body_.style.textAlign='center'
+		wrap.style.width=lightcol*lightwidth+lightcol*margin*2+'px';
+		wrap.style.background='lavenderblush'
+		body_.appendChild(wrap);
+		//按钮
+		var button_=document.createElement('button');
+		button_.innerHTML='刷新关卡';
+		button_.style.color='white';
+		button_.style.background='red'
+		body_.appendChild(button_);
+		//灯
+		var item=[];
+		for(i=0;i<lightcol*lightrow;i++){
+			var light=document.createElement('div');
+			light.style.width=lightwidth+'px';
+			light.style.height=lightheight+'px';
+			light.style.background=background1;
+			light.boxShadow=boxshadow1;
+			light.style.display='inline-block'
+			light.style.margin=margin+'px';
+			light.style.borderRadius='10px';
+			light.onclick=click;
+			light.index=i;
+			light.style.fontSize='10px'
+			light.innerHTML=i;
+			light.style.color='white';
+			light.style.lineHeight=lightheight+'px';
+			light.style.textAlign='center'
+			item.push(light);
+			light.ison=false;
+			wrap.appendChild(light)
+		}
+		function click(){
+			clickItem(this);
+			if(count==0){
+				alert('恭喜通关');
+				level+=5;
+				random_();
+			}
+		}
+		function clickItem(a){
+			itemon(a);
+			if(a.index>lightcol){
+				itemon(item[a.index-lightcol])
+			}
+			if(a.index<(lightrow-1)*lightcol){
+				itemon(item[a.index+lightcol])
+			}
+			if(a.index%lightcol!=0){
+				itemon(item[a.index-1])
+			}
+			if((a.index+1)%lightcol!=0){
+				itemon(item[a.index+1])
+			}
+		}
+		function itemon(item){
+			if(item.ison==false){
+				item.style.background=background2;
+				item.style.boxShadow=boxshadow2;
+				item.ison=true;
+				count++;
+			}else{
+				item.style.background=background1;
+				item.style.boxShadow=boxshadow1;
+				item.ison=false;
+				count--;
+			}
+		}
+		function random_(){
+			for(i=0;i<level;i++){
+			var ran=Math.ceil(Math.random()*lightcol*lightrow-1);
+			clickItem(item[ran])
+			console.log(ran);
+			}
+		}
+		random_()
+		
+	</script>
+</html>
