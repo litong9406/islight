@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#mainBox {
+				width: 300px;
+				height: 500px;
+				background: lavender;
+				border: 1px solid gold;
+				margin: auto;
+				position: relative;
+			}
+			
+			.ball {
+				width: 30px;
+				height: 30px;
+				background: cyan;
+				border-radius: 50%;
+				position: absolute;
+				left: 0px;
+				top: 0px;
+			}
+			
+			.pai {
+				width: 70px;
+				height: 15px;
+				background: orange;
+				position: absolute;
+				bottom: 20px;
+				left: 100px;
+			}
+			
+			#zz {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				left: 0px;
+				top: 0px;
+				background: rgba(0, 0, 0, 0.5);
+				text-align: center;
+				margin: auto;
+				display: none;
+			}
+			
+			#restart {
+				display: inline-block;
+				width: 100px;
+				height: 50px;
+				background: blanchedalmond;
+				font-size: 20px;
+				text-align: center;
+				line-height: 50px;
+				color: red;
+				border-radius: 20px;
+				/*margin-top: 250px;*/
+			}
+			
+			#text {
+				width: 150px;
+				height: 50px;
+				color: aquamarine;
+				margin: auto;
+				font-size: 20px;
+				/*margin-top: 200px;*/
+			}
+			#score{
+				width: 150px;
+				height: 50px;
+				color: orange;
+				margin: auto;
+				font-size: 20px;
+				margin-top: 200px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="mainBox">
+			<div class="ball">
+
+			</div>
+			<div class="pai">
+
+			</div>
+		</div>
+		<div id="zz">
+			<div id="score">
+				分数:0分
+			</div>
+			<div id="text">
+				Game Over!!!
+			</div>
+			<div id="restart">
+				重新开始
+			</div>
+		</div>
+		<!--<div id="restart">
+				
+			</div>-->
+	</body>
+	<script type="text/javascript">
+		var ball_ = document.getElementsByClassName('ball')[0]
+		var mainBox = document.getElementById("mainBox")
+		var pai = document.getElementsByClassName('pai')[0]
+		var zz = document.getElementById("zz")
+		var restart = document.getElementById('restart')
+		var score_=document.getElementById("score")
+		var x = 0;
+		var y = 0;
+		var speedX = 2;
+		var speedY = 2;
+		var timer = null;
+		var score=0;
+		timer = setInterval('move()', 10)
+
+		function move() {
+
+			x += speedX;
+			y += speedY;
+			if(x <= 0 || x > mainBox.offsetWidth - ball_.offsetWidth) {
+				speedX = -speedX
+			}
+			if(y <= 0 || mainBox.offsetHeight - ball_.offsetHeight <= y) {
+				speedY = -speedY
+			}
+			ball_.style.left = x + 'px';
+			ball_.style.top = y + 'px';
+			//小球的偏移量
+			var l1 = ball_.offsetLeft;
+			var r1 = l1 + ball_.offsetWidth;
+			var t1 = ball_.offsetTop;
+			var b1 = t1 + ball_.offsetHeight;
+			//挡板的偏移量
+			var l2 = pai.offsetLeft;
+			var r2 = l2 + pai.offsetWidth;
+			var t2 = pai.offsetTop;
+			var b2 = t2 + pai.offsetHeight;
+			//
+			if(b1 >= t2 && r1 > l2 && r2 > l1) {
+				speedY = -speedY;
+				score++;
+				score_.innerHTML='分数:'+score+'分'
+			}
+			if(b1-1> t2) {
+				clearInterval(timer);
+				zz.style.display = 'inline-block'
+				return;
+			}
+		}
+
+		move();
+		var aa = 10;
+		document.onkeydown = function() {
+			var event = window.event || event;
+			switch(event.keyCode) {
+				case 37:
+					if(pai.offsetLeft > 0) {
+						pai.style.left = pai.offsetLeft - aa + 'px'
+					}
+					break;
+				case 39:
+					if(pai.offsetLeft <= mainBox.offsetWidth - pai.offsetWidth - aa) {
+						pai.style.left = pai.offsetLeft + aa + 'px'
+					}
+					break;
+				default:
+					break;
+			}
+		}
+		restart.onclick = function() {
+			//			history.go('0')
+			zz.style.display = 'none'
+			x = 0;
+			y = 0;
+			speedX = 2;
+			speedY = 2;
+			ball_.style.left = x + 'px';
+			ball_.style.top = y + 'px';
+			timer = null;
+			timer = setInterval('move()', 10)
+
+		}
+	</script>
+
+</html>
