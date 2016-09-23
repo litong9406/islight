@@ -102,30 +102,35 @@
 			</div>-->
 	</body>
 	<script type="text/javascript">
+		//公共变量
 		var ball_ = document.getElementsByClassName('ball')[0]
 		var mainBox = document.getElementById("mainBox")
 		var pai = document.getElementsByClassName('pai')[0]
 		var zz = document.getElementById("zz")
 		var restart = document.getElementById('restart')
 		var score_=document.getElementById("score")
+		//小球移动变量
 		var x = 0;
 		var y = 0;
 		var speedX = 2;
 		var speedY = 2;
+		//定时器
 		var timer = null;
+		//分数
 		var score=0;
 		timer = setInterval('move()', 10)
 
 		function move() {
-
 			x += speedX;
 			y += speedY;
+			//判断小球是否碰到边界
 			if(x <= 0 || x > mainBox.offsetWidth - ball_.offsetWidth) {
 				speedX = -speedX
 			}
 			if(y <= 0 || mainBox.offsetHeight - ball_.offsetHeight <= y) {
 				speedY = -speedY
 			}
+			//改变小球的left和top值
 			ball_.style.left = x + 'px';
 			ball_.style.top = y + 'px';
 			//小球的偏移量
@@ -138,12 +143,13 @@
 			var r2 = l2 + pai.offsetWidth;
 			var t2 = pai.offsetTop;
 			var b2 = t2 + pai.offsetHeight;
-			//
+			//判断小球是否落到挡板上
 			if(b1 >= t2 && r1 > l2 && r2 > l1) {
 				speedY = -speedY;
 				score++;
 				score_.innerHTML='分数:'+score+'分'
 			}
+			//小球未落到挡板上，游戏结束
 			if(b1-1> t2) {
 				clearInterval(timer);
 				zz.style.display = 'inline-block'
@@ -153,15 +159,18 @@
 
 		move();
 		var aa = 10;
+		//键盘事件
 		document.onkeydown = function() {
 			var event = window.event || event;
 			switch(event.keyCode) {
 				case 37:
+					//挡板不能超出左边界
 					if(pai.offsetLeft > 0) {
 						pai.style.left = pai.offsetLeft - aa + 'px'
 					}
 					break;
 				case 39:
+					//挡板不能超出右边界				
 					if(pai.offsetLeft <= mainBox.offsetWidth - pai.offsetWidth - aa) {
 						pai.style.left = pai.offsetLeft + aa + 'px'
 					}
@@ -170,8 +179,8 @@
 					break;
 			}
 		}
+		//重新开始
 		restart.onclick = function() {
-			//			history.go('0')
 			zz.style.display = 'none'
 			x = 0;
 			y = 0;
