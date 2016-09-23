@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			*{
+				font-size: 0;
+				margin: 0;
+				padding: 0;
+			}
+			#wrap{
+			min-width: 1200px;
+			}
+			.minBox{
+				border: 1px solid red;
+				width: 400px;
+				height: auto;
+				position: relative;
+				display: inline-block;
+				vertical-align: top;
+			}
+			.minBox img{
+				width: 100%;
+				height: auto;
+
+			}
+			.moveBox{
+				border:1px solid black;
+				width: 100px;
+				height: 100px;
+				background: yellow;
+				opacity: 0.5;
+				border-radius:50% ;
+				position: absolute;
+				left: 0px;
+				top: 0px;
+				display: none;
+			}
+			.maxBox{
+				display: inline-block;
+				
+				width: 700px;
+				height:600px;
+				overflow:hidden;
+				border: 10px solid yellow;
+				display: none;
+			}
+			.maxBox img{
+				width: 2800px;
+				height: auto;
+			}
+		</style>
+	</head>
+	<body>
+			<div id="wrap">
+			<div class="minBox">
+				<img src="img/233758hw7o7h08kkozkcwi.jpg"/>
+				<div class="moveBox">		
+				</div>
+			</div>
+			<div class="maxBox">
+				<img src="img/233758hw7o7h08kkozkcwi.jpg"/>			
+			</div>				
+			</div>
+	</body>
+	<script type="text/javascript">
+		var minBox=document.querySelector('.minBox')
+		var moveBox=document.querySelector(".moveBox")
+		var maxBox=document.querySelector(".maxBox")
+		var maxImg=document.querySelector('.maxBox img')
+		//
+		var moveX=0;
+		var moveY=0;
+		//放大镜移动
+		minBox.onmousemove=function(){
+			var event=window.event||event;
+			moveX=event.clientX-50;
+			moveY=event.clientY-50;
+			//
+			if(moveX<0){
+				moveX=0;
+			}
+			if(moveY<0){
+				moveY=0
+			}
+			if(moveX>=minBox.offsetWidth-moveBox.offsetWidth){
+				moveX=minBox.offsetWidth-moveBox.offsetWidth
+			}
+			if(moveY>=minBox.offsetHeight-moveBox.offsetHeight){
+				moveY=minBox.offsetHeight-moveBox.offsetHeight
+			}
+			moveBox.style.left=moveX+'px';
+			moveBox.style.top=moveY+'px';
+			moveBox.style.display='inline-block';
+			maxBox.style.display='inline-block';
+			console.log(maxBox.scrollLeft)
+			//获取比例
+			var scaleX=moveBox.offsetLeft/(minBox.offsetWidth-moveBox.offsetWidth)
+			var scaleY=moveBox.offsetTop/(minBox.offsetHeight-moveBox.offsetHeight)
+			maxBox.scrollLeft=(maxImg.clientWidth-maxBox.clientWidth)*scaleX;
+			maxBox.scrollTop=(maxImg.clientHeight-maxBox.clientHeight)*scaleY;
+		}
+		minBox.onmouseout=function(){
+			moveBox.style.display='none';
+			maxBox.style.display='none';
+		}
+	</script>
+</html>
