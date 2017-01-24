@@ -7,6 +7,36 @@
 		<meta name="Description" content="" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta name="viewpoint" content="width=device-width,initial-scale=1,user-scalable= no" />
+			<script>
+
+			var typewriter = document.querySelector(".typewriter"),
+				code = typewriter.innerHTML,
+				pos = 0,
+				len = code.length;
+//			typewriter.innerHTML = "";
+			typewriter.style.display = "block";
+
+			function typewriting() {
+				pos++;
+				if(pos <= len) {
+					switch(code.charAt(pos)) //charAt()返回指定位置的字符
+					{
+						case "<": //<>代码开始的字符
+							pos = code.indexOf(">", pos); //array.indexOf(item,start)返回某个指定的字符串在字符串中首次出现的位置
+							break;
+						case "&":
+							pos = code.indexOf(";", pos);
+							break;
+					}
+					typewriter.innerHTML = code.substring(0, pos); //substring()用于提取字符串中介于两个指定下标之间的字符，substring() 方法返回的子串包括 开始 处的字符，但不包括 结束 处的字符。
+					setTimeout(typewriting, 100);
+				} else {
+					typewriter.classList.add("gameover"); //classList 属性返回元素的类名，作为 DOMTokenList 对象。该属性用于在元素中添加，移除及切换 CSS 类。
+				}
+			}
+			typewriting();
+
+	</script>
 		<title>0116 printer</title>
 		<style type="text/css">
 			.typewriter {
@@ -60,35 +90,6 @@
 			<br /><br /> 6. You may be out of my sight, but never out of my mind.<br /> &emsp;你也许已走出我的视线，但从未走出我的思念。
 		</div>
 	</body>
-	<script>
 
-			var typewriter = document.querySelector(".typewriter"),
-				code = typewriter.innerHTML,
-				pos = 0,
-				len = code.length;
-//			typewriter.innerHTML = "";
-			typewriter.style.display = "block";
-
-			function typewriting() {
-				pos++;
-				if(pos <= len) {
-					switch(code.charAt(pos)) //charAt()返回指定位置的字符
-					{
-						case "<": //<>代码开始的字符
-							pos = code.indexOf(">", pos); //array.indexOf(item,start)返回某个指定的字符串在字符串中首次出现的位置
-							break;
-						case "&":
-							pos = code.indexOf(";", pos);
-							break;
-					}
-					typewriter.innerHTML = code.substring(0, pos); //substring()用于提取字符串中介于两个指定下标之间的字符，substring() 方法返回的子串包括 开始 处的字符，但不包括 结束 处的字符。
-					setTimeout(typewriting, 100);
-				} else {
-					typewriter.classList.add("gameover"); //classList 属性返回元素的类名，作为 DOMTokenList 对象。该属性用于在元素中添加，移除及切换 CSS 类。
-				}
-			}
-			typewriting();
-
-	</script>
 
 </html>
